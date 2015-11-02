@@ -1,0 +1,29 @@
+@import './flex'
+.intro
+	background: #ccc
+	+display-flex()
+	+flex-direction(column)
+	+justify-content(center)
+	+align-items(center)
+	h2
+		font-size: 40px
+		height: 80px
+		line-height: 80px
+		margin-bottom: 20px
+	cite
+		font-size: 20px
+		height: 40px
+		line-height: 40px
+	li
+		+flex-grow(1)
+		+align-self(flex-start)
+		font-size: 25px
+		line-heigh: 50px
+		margin-left: 30px
+	img
+		+flex-grow(1)
+		margin: 30px
+	.gray
+		color: #666
+	.red
+		color: red

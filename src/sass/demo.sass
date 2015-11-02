@@ -1,0 +1,11 @@
+=transition($trans)
+	transition: $trans
+	-webkit-transition: $trans
+	-moz-transition: $trans
+	-ms-transition: $trans
+
+.demo, .demo>div
+	width: 100%
+	height: 100%
+	*
+		+transition(all 1s)
