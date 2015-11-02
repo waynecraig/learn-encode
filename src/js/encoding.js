@@ -67,6 +67,7 @@ export default class Encoding extends Component {
 			}
 			return pre + cur;
 		}, '');
+		backslashStr += ', \\u{' + codePointStrs[3].replace(/\s/g, '') + '}';
 
 		percentStr = encodeURI(this.state.char);
 		if (!percentStr.includes('%')) {

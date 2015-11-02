@@ -19,7 +19,7 @@ export default class Intro extends Component {
 
 	render() {
 		return (
-			<div className='intro' onClick={e=>this.next(e)}>
+			<div className='intro' onKeyDown={e=>this.next(e)} onClick={e=>this.next(e)}>
 				{this.props.data.views[this.state.cur].map((i, j)=>{
 					let [Tag, content, className] = this.props.data.contents[i];
 					if (Tag === 'img') {
