@@ -20169,8 +20169,7 @@
 
 	var _encoding2 = _interopRequireDefault(_encoding);
 
-	var steps = [{
-		tag: _intro2['default'],
+	var steps = [{ tag: _intro2['default'],
 		data: {
 			views: [[0, 1, 2]],
 			contents: [['h2', '字符编码与转义'], ['cite', 'craigwu'], ['cite', '2015-11-02']]
@@ -20178,14 +20177,14 @@
 	}, {
 		tag: _intro2['default'],
 		data: {
-			views: [[0], [0, 1], [0, 4, 2], [0, 4, 5, 3]],
-			contents: [['h2', '问题'], ['li', 'String的length函数返回的数字是什么意思?', 'red'], ['li', 'Url中一长串的%是什么意思', 'red'], ['li', 'UTF-8和UTF-16有什么区别', 'red'], ['li', 'String的length函数返回的数字是什么意思?', 'gray'], ['li', 'Url中一长串的%是什么意思', 'gray'], ['li', 'UTF-8和UTF-16有什么区别', 'gray']]
+			views: [[0], [0, 1], [0, 1, 2], [0, 1, 2, 3]],
+			contents: [['h2', '问题'], ['li', 'String的length函数返回的数字是什么意思?'], ['li', 'UTF-8和UTF-16有什么区别?'], ['li', '我们经常用到的字符转义有哪几种？']]
 		}
 	}, {
 		tag: _intro2['default'],
 		data: {
 			views: [[0, 4]],
-			contents: [['h2', '字符编码'], ['li', 'ASCII: 单字节，只定义了0-127'], ['li', 'Unicode: 试图对所有字符做统一编码, utf-8, 可变长'], ['li', 'gb-2312: 用于对简体中文的编码'], ['img', 'http://www.asciitable.com/index/asciifull.gif', 'asciiimg']]
+			contents: [['h2', 'ASCII - 最基本的字符编码'], ['li', 'ASCII: 单字节，只定义了0-127'], ['li', 'Unicode: 试图对所有字符做统一编码, utf-8, 可变长'], ['li', 'gb-2312: 用于对简体中文的编码'], ['img', 'http://www.asciitable.com/index/asciifull.gif', 'asciiimg']]
 		}
 	}, {
 		tag: _encoding2['default'],
@@ -22474,20 +22473,20 @@
 		}, {
 			key: 'getEscapeStrs',
 			value: function getEscapeStrs() {
-				var backslashStr = undefined,
-				    percentStr = undefined,
+				var backslashStr = '',
+				    percentStr = '',
 				    entityrefStr = '';
-				if (this.state.char.length === 1) {
-					var codePointStrs = this.getCodePointStrs();
-					backslashStr = '\\' + codePointStrs[2] + ', \\x' + codePointStrs[3];
-				} else {
-					backslashStr = this.getUtf16Strs()[2].split(' ').reduce(function (pre, cur, i) {
-						if (i % 2 === 0) {
-							pre += '\\u';
-						}
-						return pre + cur;
-					}, '');
+
+				var codePointStrs = this.getCodePointStrs();
+				if (codePointStrs[3].length === 2) {
+					backslashStr = '\\' + codePointStrs[2] + ', \\x' + codePointStrs[3] + ', ';
 				}
+				backslashStr = this.getUtf16Strs()[2].split(' ').reduce(function (pre, cur, i) {
+					if (i % 2 === 0) {
+						pre += '\\u';
+					}
+					return pre + cur;
+				}, '');
 
 				percentStr = encodeURI(this.state.char);
 				if (!percentStr.includes('%')) {
@@ -22499,6 +22498,7 @@
 					entityrefStr += htmlSpe + ', ';
 				}
 				entityrefStr += '&#' + this.state.char.codePointAt(0) + ';';
+
 				return [backslashStr, percentStr, entityrefStr];
 			}
 		}, {

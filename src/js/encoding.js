@@ -55,18 +55,18 @@ export default class Encoding extends Component {
 	}
 
 	getEscapeStrs() {
-		let backslashStr, percentStr, entityrefStr = '';
-		if (this.state.char.length === 1) {
-			let codePointStrs = this.getCodePointStrs();
-			backslashStr = '\\' + codePointStrs[2] + ', \\x' + codePointStrs[3];
-		} else {
-			backslashStr = this.getUtf16Strs()[2].split(' ').reduce((pre,cur,i)=>{
-				if (i % 2 === 0) {
-					pre += '\\u';
-				}
-				return pre + cur;
-			}, '');
+		let backslashStr = '', percentStr = '', entityrefStr = '';
+
+		let codePointStrs = this.getCodePointStrs();
+		if (codePointStrs[3].length === 2) {
+			backslashStr = '\\' + codePointStrs[2] + ', \\x' + codePointStrs[3] + ', ';
 		}
+		backslashStr = this.getUtf16Strs()[2].split(' ').reduce((pre,cur,i)=>{
+			if (i % 2 === 0) {
+				pre += '\\u';
+			}
+			return pre + cur;
+		}, '');
 
 		percentStr = encodeURI(this.state.char);
 		if (!percentStr.includes('%')) {
@@ -84,6 +84,7 @@ export default class Encoding extends Component {
 			entityrefStr += htmlSpe + ', ';
 		}
 		entityrefStr += '&#' + this.state.char.codePointAt(0) + ';';
+
 		return [backslashStr, percentStr, entityrefStr];
 	}
 
